@@ -1,0 +1,67 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+<div class="page-header">
+  <h1>Predict new Formulas {{ title }} <small>Select your Project for Prediction</small></h1>
+</div>
+
+<div class="container">
+    <form action="" method="post" class="form-horizontal">
+        {% csrf_token %}
+        <div class="form-group row">
+            <div class="col-md-12">
+                {{ form.e2e_prediction_field.label_tag }} {{ form.e2e_prediction_field }}
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-12">
+                {{ form.project_field.label_tag }} {{ form.project_field }}
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-12">
+                {{ form.experiment_field.label_tag }} {{ form.experiment_field }}
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-4">
+                {{ form.submission_field.label_tag }} {{ form.submission_field }}
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="offset-md-3 col-md-9">
+                <button type="submit" class="btn btn-primary" name="predict" value="Predict">Predict
+                    <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
+                </button>
+             </div>
+        </div>
+        {% if form.errors %}
+            <p class="validation-summary-errors">Errors detected.</p>
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <div class="alert alert-error">
+                    <strong>{{ field.label_tag }}{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+                <div class="alert alert-error">
+                <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </form>
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+    {% load staticfiles %}
+<script src="{% static 'app/scripts/jquery.validate.min.js' %}"></script>
+
+{% endblock %}
+
+

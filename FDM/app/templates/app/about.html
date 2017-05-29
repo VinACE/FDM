@@ -1,0 +1,17 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+<h2>{{ title }}.</h2>
+<h3>{{ message }}</h3>
+Version 0.1
+<br />
+<p>Based on historical data a Machine Learning Model is trained to classify whether a Submission (or Experiment) for a certain Market Segment will result in a WIN or a LOSS.</p>
+<p>This model is used on new Submissions (or Experiment) to predict whether they will result in a WIN or a LOSS, this prediction can be done for each market segment.</p>
+<br />
+<p>The matching Winning Submissions (or Experiments) will be listed that resemble this new submission. Matching is defined as the number of ingredients, with their dosage, that overlap</p>
+<br />
+<p>In a future release FDM will also generate its own set of Experiments. This set is a statistical reflection on historical usage of ingredients, as well with respect to frequency as dosage.
+    These generated Experiments will also be classified, the Winning ones for a certain maket segments will be highlighed as possible candidates for further investigation.</p>
+
+{% endblock %}

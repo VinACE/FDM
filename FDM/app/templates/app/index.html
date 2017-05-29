@@ -1,0 +1,112 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+<div class="jumbotron text-center"">
+    <h1>IFF-DM Data Miner</h1>
+    <p class="lead">Predict the success of a new Experiment or Submission for the different market segments.</p>
+</div>
+
+
+<div class="row">
+    <div class="col-md-3">
+        <h2>Retrieve</h2>
+        <p> Retrieve a dataset that will be used by the different Data Mining modules. These datasets are turned into
+            a generic format having input features and output features. The different datasets that can be retrieved are the
+            outcome of E2E (End-to-End) scenarios.
+        </p>
+    </div>
+    <div class="col-md-3">
+        <h2>Learn</h2>
+        <p> IFF-DM prediction is based on several Machine Learning models. These models are tained and tested to predict
+            the success (WIN or LOSS) of a formula for the different market segments. 
+            At this moment the prediction is "only" based on the ingredients being used. In the future this
+            prediction can be extended with othe features derived from: ingredient, market, olfactive, project, hedonic.
+        </p>
+    </div>
+    <div class="col-md-3">
+        <h2>Predict</h2>
+        <p> Once the IFF-DM Machine Learning models are trained and tested, new data can be 
+            classified on WIN or LOSS. This new data is retrieved on-line from BW and will consists of the
+            Experiments or Submissions of the selected project.
+            For each experiment or material belonging to the project a WIN/LOSS classification will be
+            predicted for the different market segments and using different ML models.
+        </p>
+    </div>
+    <div class="col-md-3">
+        <h2>Generate</h2>
+        <p> In IFF-DM it is also possible to Generate new Formulas using Monte Carlo techniques. This means
+            that statistical distributions are used on ingredient usage (frequncy and dosage) to come up with
+            new formulas. These new formulas are submitted to the Predict function to derive whether they can
+            be successful.
+        </p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <p>
+            <a class="btn btn-primary" href="{% url 'retrieve' %}">Retrieve 
+            <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span></a>
+        </p>
+    </div>
+    <div class="col-md-3">
+        <p>
+            <a class="btn btn-primary" href="{% url 'learn' %}">Learn
+            <span class="glyphicon glyphicon-education" aria-hidden="true"></span></a>
+        </p>
+    </div>
+    <div class="col-md-3">
+        <p>
+            <a class="btn btn-primary" href="{% url 'predict' %}">Predict
+            <span class="glyphicon glyphicon-tag" aria-hidden="true"></span></a>
+        </p>
+    </div>
+    <div class="col-md-3">
+        <p>
+            <a class="btn btn-primary" href="{% url 'generate' %}">Generate
+            <span class="glyphicon glyphicon-equalizer" aria-hidden="true"></span></a>
+        </p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <h2>Basket</h2>
+        <p> Besides Predict it is also possible to Compare the new Experiment or Submissions with other(Winning)
+            Experiments. Shopping Basked techniques are used known from shopping web sites (<i>others also bought</i>).
+            Based on the overlap of used ingredients and dosage, comparable Experiments or Submissions are shown.
+        </p>
+    </div>
+    <div class="col-md-3">
+        <h2>Explore</h2>
+        <p> Using Advanced Interactive graphics (<a href="https://d3js.org/">D3</a>) the underlying End-to-End data can be explored.
+        </p>
+    </div>
+    <div class="col-md-3">
+        <h2>Genesis</h2>
+        <p>Python version of the Genesis Excel application. Formulas are imported, prepared, calculated and next new formulas are Generated.
+        </p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <p>
+            <a class="btn btn-primary" href="{% url 'basket' %}">Basket
+            <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+        </p>
+    </div>
+    <div class="col-md-3">
+        <p>
+            <a class="btn btn-primary" href="{% url 'explore' %}">Explore
+            <span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span></a>
+        </p>
+    </div>
+    <div class="col-md-3">
+        <p>
+            <a class="btn btn-primary" href="{% url 'genesis' %}">Genesis
+            <span class="glyphicon glyphicon-equalizer" aria-hidden="true"></span></a>
+        </p>
+    </div>
+</div>
+
+
+{% endblock %}

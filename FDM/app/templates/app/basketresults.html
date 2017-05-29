@@ -1,0 +1,51 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+
+<div class="page-header">
+  <h1>Generated Baskets {{ title }} <small>for the Market Segments</small></h1>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th> Seq #</th>
+                        <th> Basket </th>
+                        <th> Frequency </th>
+                        <th> Support </th>
+                        <th> Size </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for basket in basket_li %}
+                    <tr>
+                        <td><a link href="basket_experiment/{{ forloop.counter0 }}">{{ forloop.counter0 }}</a></td>
+                        <td>
+                            {% for comp in basket.0 %}
+                                {{ comp.0}} : {{ comp.1}}<br />
+                            {% endfor %}
+                        </td>
+                        <td>{{ basket.1 }}</td>
+                        <td>{{ basket.2|stringformat:".3f" }}</td>
+                        <td>{{ basket.3 }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+
+{% block scripts %}
+
+    {% load staticfiles %}
+<script src="{% static 'app/scripts/jquery.validate.min.js' %}"></script>
+{% endblock %}
+

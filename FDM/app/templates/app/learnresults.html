@@ -1,0 +1,66 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/dc/2.0.0-beta.32/dc.css" media="screen" /> 
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/dc/2.0.0-beta.32/dc.css" media="screen" /> 
+
+<div class="page-header">
+  <h1>Trained Models {{ title }} <small>Accuracy Results </small></h1>
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <table id="learn_table" class="tablesorter-blue">
+                <thead>
+                    <tr>
+                        <th> Segment </th>
+                        <th> Classifier </th>
+                        <th> Wins (Test Set) </th>
+                        <th> Wins (Predicted) </th>
+                        <th> Loss (Test Set) </th>
+                        <th> Loss (Predicted) </th>
+                        <th> Accuracy </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for learn1 in learn_li %}
+                    <tr>
+                        <td>{{ learn1.segment }}</td>
+                        <td style="color:red">
+                            {{ learn1.clf_name }}
+                        </td>
+                        <td>{{ learn1.y_ts_wins }}</td>
+                        <td>{{ learn1.y_pr_wins }}</td>
+                        <td>{{ learn1.y_ts_loss }}</td>
+                        <td>{{ learn1.y_pr_loss }}</td>
+                        <td style="color:red">
+                            {{ learn1.accuracy|stringformat:".3f" }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<br />
+
+
+{% endblock %}
+
+
+{% block scripts %}
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+
+    {% load staticfiles %}
+        <script src="{% static 'app/scripts/jquery.validate.min.js' %}"></script>
+        <script src="{% static 'app/scripts/crossfilter.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.27.8/js/jquery.tablesorter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.27.8/js/jquery.tablesorter.widgets.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dc/2.0.0-beta.32/dc.js"></script>
+    {% load staticfiles %}
+        <script src="{% static 'app/scripts/learnresults.js' %}"></script>
+{% endblock %}

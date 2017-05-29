@@ -1,0 +1,269 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+
+<div class="page-header">
+    <h1>
+        {% load staticfiles %}
+            <img src="{% static 'app/content/genesis.jpg' %}" alt="Genesis" height="100" width="120">
+        Genesis Results {{ title }} <small></small></>
+    </h1>
+</div>
+
+<form action="" method="post" class="w3-container">
+    {% csrf_token %}
+    <div class="w3-row w3-margin">
+        {% if g_mode == 'retrieve' %}
+            <button type="submit" name="set_selection" class="w3-btn w3-ripple">Set Genesis Selection
+                <span class="glyphicon glyphicon-asterisk glyphicon-circle-arrow-up" aria-hidden="true"></span>
+            </button>
+        {% else %}
+            <button type="submit" name="return_selection" class="w3-btn w3-ripple">Return Genesis
+                <span class="glyphicon glyphicon-circle-arrow-up" aria-hidden="true"></span>
+            </button>
+        {% endif %}
+    </div>
+    <div class="w3-row">
+        <div class="w3-col l12">
+            <ul class="w3-navbar w3-light-grey">
+              <li><a href="javascript:void(0)" onclick="opentab('Components')">Components</a></li>
+              <li><a href="javascript:void(0)" onclick="opentab('Formulas')">Formulas</a></li>
+              <li><a href="javascript:void(0)" onclick="opentab('Calculate')">Calculate</a></li>
+            </ul>
+            <div id="Components" class="w3-container w3-border tabs">
+
+                <div class="w3-row">
+                    <div class="w3-col l12">
+                        <a class="w3-btn w3-ripple" name="select_all">Select All
+                            <span class="glyphicon glyphicon glyphicon-check" aria-hidden="true"></span></a>
+                        <a class="w3-btn w3-ripple" name="select_none">Select None
+                            <span class="glyphicon glyphicon glyphicon-check" aria-hidden="true"></span></a>
+                    </div>
+                </div>
+                <div class="w3-row">
+                    <div class="w3-col l12">
+                        <table id="genesis_comp_table" class="tablesorter-blue">
+                            <thead>
+                                <tr>
+                                    <th> Ingredient </th>
+                                    <th> cid/bid </th>
+                                    <th> Name </th>
+                                    <th> Ingredients </th>
+                                    <th> Bom Parts <br />(1000) </th>
+                                    <th> Nr Form </th>
+                                    <th> Min </th>
+                                    <th> Max </th>
+                                    <th> Avg </th>
+                                    <th> Std </th>
+                                    <th> MNC </th>
+                                    <th> Cut-off </th>
+                                    <th> X </th>
+                                    <th> Y </th>
+                                    <th> Odor </th>
+                                    <th> Slope </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for comp, comp_dict in g_comp_dict.items %}
+                                    {% if comp_dict.nr_ingr > 0 %}
+                                    <tr>
+                                        <td>{{ comp }}</td>
+                                        <td>{{ comp_dict.cid }}</td>
+                                        <td>{{ comp_dict.comp_name }}</td>
+                                        {% if g_mode == 'retrieve' %}
+                                            <td>
+                                                {% for ingr in comp_dict.ingrs %}
+                                                    <input class="w3-check" type="checkbox" name="selected[]" value="{{ comp }}">
+                                                    <label class="w3-label">{{ ingr.1 }}</label>
+                                                    <br />
+                                                {% endfor %}
+                                            </td>
+                                        {% else %}
+                                            <td>
+                                                {% for ingr in comp_dict.ingrs %}
+                                                    <label class="w3-label">{{ ingr.1 }}</label>
+                                                    <br />
+                                                {% endfor %}
+                                            </td>
+                                        {% endif %}
+                                        <td align="right">{{ comp_dict.bompartp|floatformat:4 }}</td>
+                                        <td align="right">{{ comp_dict.nr_ingr|floatformat:0 }}</td>
+                                        <td align="right">{{ comp_dict.min|floatformat:4 }}</td>
+                                        <td align="right">{{ comp_dict.max|floatformat:4 }}</td>
+                                        <td align="right">{{ comp_dict.avg|floatformat:4 }}</td>
+                                        <td align="right">{{ comp_dict.std|floatformat:4 }}</td>
+                                        <td align="right">{{ comp_dict.mnc|floatformat:2 }}</td>
+                                        <td align="right">{{ comp_dict.cut_off|floatformat:4 }}</td>
+                                        <td align="right">{{ comp_dict.X|floatformat:4 }}</td>
+                                        <td align="right">{{ comp_dict.Y|floatformat:4 }}</td>
+                                        <td align="right">{{ comp_dict.odor|floatformat:4 }}</td>
+                                        <td align="right">{{ comp_dict.slope|floatformat:4 }}</td>
+                                    </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div id="Formulas" class="w3-container w3-border tabs" style="display:none">
+                <div class="w3-container">
+                    <div class="w3-row">
+                        <div class="w3-col l12">
+                            <table id="genesis_mat_table" class="tablesorter-blue">
+                                <thead>
+                                    <tr>
+                                        <th> Formula </th>
+                                        <th> Bom Parts <br />(1000) </th>
+                                        <th> Nr Ingr </th>
+                                        <th> Cut-off </th>
+                                        <th> Min </th>
+                                        <th> Max </th>
+                                        <th> Avg </th>
+                                        <th> Std </th>
+                                        <th> MNC </th>
+                                        <th> Cut-off </th>
+                                        <th> X </th>
+                                        <th> Y </th>
+                                        <th> Odor </th>
+                                        <th> Slope </th>
+                                        <th> % IFF #</th>
+                                        <th> % Pref #</th>
+                                        <th> % IFF Q</th>
+                                        <th> % Pref Q</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for mat, mat_dict in g_mat_dict.items %}
+                                        {% if mat_dict.nr_ingr > 0 %}
+                                        <tr>
+                                            {% if g_mode == 'retrieve' %}
+                                                <td>
+                                                    <input class="w3-check" type="checkbox" name="sel_form[]" value="{{ mat }}">
+                                                    <label class="w3-label">{{ mat }}</label>
+                                                </td>
+                                            {% else %}
+                                                <td>
+                                                    <label class="w3-label">{{ mat }}</label>
+                                                </td>
+                                            {% endif %}
+                                            <td align="right">{{ mat_dict.bompartp |floatformat:4 }}</td>
+                                            <td align="right">{{ mat_dict.nr_ingr|floatformat:0 }}</td>
+                                            <td align="right">{{ mat_dict.cut_off |floatformat:4 }}</td>
+                                            <td align="right">{{ mat_dict.min|floatformat:4 }}</td>
+                                            <td align="right">{{ mat_dict.max|floatformat:4 }}</td>
+                                            <td align="right">{{ mat_dict.avg|floatformat:4 }}</td>
+                                            <td align="right">{{ mat_dict.std|floatformat:4 }}</td>
+                                            <td align="right">{{ mat_dict.mnc|floatformat:2 }}</td>
+                                            <td align="right">{{ mat_dict.cut_off|floatformat:4 }}</td>
+                                            <td align="right">{{ mat_dict.X|floatformat:4 }}</td>
+                                            <td align="right">{{ mat_dict.Y|floatformat:4 }}</td>
+                                            <td align="right">{{ mat_dict.odor|floatformat:4 }}</td>
+                                            <td align="right">{{ mat_dict.slope|floatformat:4 }}</td>
+                                            <td align="right">{{ mat_dict.perc_iff_n |floatformat:0 }}</td>
+                                            <td align="right">{{ mat_dict.perc_pref_n |floatformat:0 }}</td>
+                                            <td align="right">{{ mat_dict.perc_iff_q |floatformat:2 }}</td>
+                                            <td align="right">{{ mat_dict.perc_pref_q |floatformat:2 }}</td>
+                                        </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="Calculate" class="w3-container w3-border tabs" style="display:none">
+                <div class="w3-container">
+                    <div class="w3-row">
+                        <div class="w3-col l4">
+                            <h2>Formula Calculations</h2>
+                            <table id="genesis_calcmat_table" class="tablesorter-blue">
+                                <thead>
+                                    <tr>
+                                        <th> Calc Key </th>
+                                        <th> Threshold </th>
+                                        <th> Calc Value </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for calc in g_calcmat_l %}
+                                    <tr>
+                                        <td>{{calc.0}}</td>
+                                        <td>{{calc.1}}</td>
+                                        <td align="right">{{calc.2}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="w3-col l4">
+                            <h2>Ingredient Calculations</h2>
+                            <table id="genesis_calcomp_table" class="tablesorter-blue">
+                                <thead>
+                                    <tr>
+                                        <th> Calc Key </th>
+                                        <th> Threshold </th>
+                                        <th> Calc Value </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for calc in g_calcomp_l %}
+                                    <tr>
+                                        <td>{{calc.0}}</td>
+                                        <td>{{calc.1}}</td>
+                                        <td align="right">{{calc.2}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="w3-row">
+                        <div class="w3-col l4">
+                            <h2>Unknown IPCs (Ingredients)</h2>
+                            <table id="genesis_unknown_table" class="tablesorter-blue">
+                                <thead>
+                                    <tr>
+                                        <th> Ingredient </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for comp in g_unknown_ipc_l %}
+                                    <tr>
+                                        <td>{{comp}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+function opentab(tab_name) {
+    var i;
+    var x = document.getElementsByClassName("tabs");
+    for (i = 0; i < x.length; i++) {
+       x[i].style.display = "none";  
+    }
+    document.getElementById(tab_name).style.display = "block";
+}
+</script>
+
+{% endblock %}
+
+
+{% block scripts %}
+    {% load staticfiles %}
+        <script src="{% static 'app/scripts/jquery.validate.min.js' %}"></script>
+        <script src="{% static 'app/scripts/crossfilter.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.27.8/js/jquery.tablesorter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.27.8/js/jquery.tablesorter.widgets.js"></script>
+    {% load staticfiles %}
+        <script src="{% static 'app/scripts/genesisresults.js' %}"></script>
+{% endblock %}

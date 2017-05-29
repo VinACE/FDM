@@ -1,0 +1,86 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+
+<style>
+
+    .node circle {
+      fill: #fff;
+      stroke: steelblue;
+      stroke-width: 1.5px;
+    }
+
+    .node {
+      font: 10px sans-serif;
+    }
+
+    .link {
+      fill: none;
+      stroke: #ccc;
+      stroke-width: 1.5px;
+    }
+
+</style>
+
+<div class="page-header">
+  <h1>Generated Basket {{ title }} <small></small></h1>
+</div>
+
+<div class="w3-card w3-padding">
+    <h4>Formulas within this Basket:</h4>
+    <ul>
+        {% for comp in basket %}
+            <li>{{ comp.0}} : {{ comp.1}}</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div class="w3-container">
+    <div class="w3-row">
+        <div class="w3-col l12">
+            <h2>Radial Tree: Basket - Sold-to - WIN/LOSS - Formula</h2>
+            <div id="radial_tree"> 
+            </div>
+        </div>
+    </div>
+    <div class="w3-row">
+        <div class="w3-col l12">
+            <h2>Basket - Formula - BoM, Red is WIN, blue is LOSS</h2>
+            <table class="table table-striped table-condensed">
+                <thead>
+                    <tr>
+                        <th> experiment </th>
+                        <th> BoM </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for exp in basket_experiment_li %}
+                    <tr>
+                        {% if exp.1 == "WIN" %}
+                            <td style="color:red">{{ exp.0 }} </td>
+                        {% else %}
+                            <td style="color:blue">{{ exp.0 }} </td>
+                        {% endif %}
+                        <td>{{ exp.2 }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+
+    {% load staticfiles %}
+        <script src="{% static 'app/scripts/jquery.validate.min.js' %}"></script>
+        <script src="{% static 'app/scripts/crossfilter.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dc/2.0.0-beta.32/dc.js"></script>
+    {% load staticfiles %}
+        <script src="{% static 'app/scripts/basket_experiment.js' %}"></script>
+
+{% endblock %}

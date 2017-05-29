@@ -1,0 +1,50 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/dc/2.0.0-beta.32/dc.css" media="screen" /> 
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/dc/2.0.0-beta.32/dc.css" media="screen" />
+
+<div class="page-header">
+    <h1>
+        <script type="text/javascript">
+            var project = "{{ project }}";
+            document.write('Prediction Results <small>Project: ' + project + '</small>');
+        </script>
+    </h1>
+</div>
+
+ 
+
+<div class="container">
+    <div class="row">
+        <div id="predict_results_div" class="col-md-12">
+            {{ prediction_df | safe }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p>
+                <a class="btn btn-primary" href="{% url 'predict' %}">Predict
+                <span class="glyphicon glyphicon-tag" aria-hidden="true"></span></a>
+            </p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+
+    {% load staticfiles %}
+        <script src="{% static 'app/scripts/jquery.validate.min.js' %}"></script>
+        <script src="{% static 'app/scripts/crossfilter.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.27.8/js/jquery.tablesorter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.27.8/js/jquery.tablesorter.widgets.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dc/2.0.0-beta.32/dc.js"></script>
+    {% load staticfiles %}
+        <script src="{% static 'app/scripts/predictresults.js' %}"></script>
+{% endblock %}
+

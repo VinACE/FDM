@@ -1,0 +1,60 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/dc/2.0.0-beta.32/dc.css" media="screen" /> 
+
+
+<h2>Explore Orderbook</h2>
+
+    <div id="version"></div>
+
+    <div class="container" id="container">
+        <div class='row'>
+            <div class="col-md-4">
+                <div id="period_barchart"> 
+                    <div class="reset" style="visibility: visible;">selected: <span class="filter"></span> 
+                        <a href="javascript:period_barchart.filterAll();dc.redrawAll();">reset</a> 
+                    </div> 
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div id="region_barchart"> 
+                    <div class="reset" style="visibility: visible;">selected: <span class="filter"></span> 
+                        <a href="javascript:region_barchart.filterAll();dc.redrawAll();">reset</a> 
+                    </div> 
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div id="nrcomp_region_piechart"> 
+                    <div class="reset" style="visibility: visible;">selected: <span class="filter"></span> 
+                        <a href="javascript:nrcomp_catclass_piechart.filterAll();dc.redrawAll();">reset</a> 
+                    </div> 
+                </div>
+            </div>
+        </div>
+        <div class='row'>
+            <div class="col-md-12">
+                <div id="nrcomp_custcorp_barchart"> 
+                    <div class="reset" style="visibility: visible;">selected: <span class="filter"></span> 
+                        <a href="javascript:nrcomp_custcorp_barchart.filterAll();dc.redrawAll();">reset</a> 
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+
+{% block scripts %}
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+
+    {% load staticfiles %}
+        <script src="{% static 'app/scripts/jquery.validate.min.js' %}"></script>
+        <script src="{% static 'app/scripts/crossfilter.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dc/2.0.0-beta.32/dc.js"></script>
+    {% load staticfiles %}
+        <script src="{% static 'app/scripts/explore_orderbook.js' %}"></script>
+{% endblock %}

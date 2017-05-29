@@ -1,0 +1,61 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+<div class="page-header">
+  <h1>Retrieve Data Set {{ title }} <small>E2E Scenario</small></h1>
+</div>
+
+<div class="container">
+    <form action="" method="post" class="form-horizontal">
+        {% csrf_token %}
+        <fieldset class="form-group row">
+            <label class="col-md-3 col-form-label">E2E Retrieve</label>
+            <div class="col-md-9">
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="radio" name="e2e_choices" id="e2e_choices" value="e2eexp">Experiment
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="radio" name="e2e_choices" id="e2e_choices" value="e2esubm" checked>Submission
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="radio" name="e2e_choices" id="e2e_choices" value="e2esales" disabled>Sales
+                    </label>
+                </div>
+            </div>
+        </fieldset>
+        <div class="form-group row">
+            <div class="offset-md-3 col-md-9">
+                <button type="submit" class="btn btn-primary" name="retrieve" value="Retrieve">Retrieve
+                    <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+                </button>
+             </div>
+        </div>
+        {% if form_errors %}
+            <p class="validation-summary-errors">Errors detected.</p>
+            {% for form_error in form_errors %}
+                <div class="alert alert-error">
+                <strong>{{ form_error|escape }}</strong>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </form>
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+    {% load staticfiles %}
+<script src="{% static 'app/scripts/jquery.validate.min.js' %}"></script>
+<script src="{% static 'app/scripts/angular.min.js' %}"></script>
+
+{% endblock %}
+
+

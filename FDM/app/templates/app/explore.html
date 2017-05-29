@@ -1,0 +1,49 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+
+<div class="page-header">
+  <h1>Explore E2E Data {{ title }} <small></small></h1>
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Component Frequency Dashboard</h2>
+            <p>A dashboard to explore how often, the frequency, a component is being used.
+            </p>
+            <p><a class="btn btn-primary" href="{% url 'explore/explore_compfreq' %}">Comp Freq &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>E2E Submission Dashboard</h2>
+            <p>A dashboard to analyse the E2E scenario of Submissions - Projects - Experiment/Material - Ingredient.
+            </p>
+            <p><a class="btn btn-primary" href="{% url 'explore/explore_e2esubm' %}">E2E Submissions &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Orderbook Dashboard</h2>
+            <p>Explore the orderbook.
+            </p>
+            <p><a class="btn btn-primary" href="{% url 'explore/orderbook' %}">Orderbook &raquo;</a></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <h2>E2E Experiment Dashboard</h2>
+            <p>A dashboard to analyse the E2E scenario of Experiments - Projects - Experiment/Material - Ingredient.
+            </p>
+            <p><a class="btn btn-primary" href="{% url 'explore/explore_e2esubm' %}">E2E Experiments &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>E2E Sales Dashboard</h2>
+            <p>A dashboard to analyse the E2E scenario of Sales (Sales Forecast) - Material - Ingredient.
+            </p>
+            <p><a class="btn btn-primary" href="{% url 'explore/explore_e2esubm' %}">E2E Sales &raquo;</a></p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+

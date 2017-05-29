@@ -1,0 +1,80 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+<div class="page-header">
+  <h1>Learn Models {{ title }} <small>Test Accuracy</small></h1>
+</div>
+
+<div class="container">
+    <form action="" method="post" class="form-horizontal">
+    {% csrf_token %}
+        <div class="form-group row">
+            <div class="col-md-4">
+                {{ form.classification_field.label_tag }} {{ form.classification_field }}
+            </div>
+            <div class="col-md-4">
+                {{ form.ml_choices_field.label_tag }} {{ form.ml_choices_field }}
+            </div>
+            <div class="col-md-4">
+                {{ form.ms_choices_field.label_tag }} {{ form.ms_choices_field }}
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-4">
+                {{ form.test_perc_field.label_tag }} {{ form.test_perc_field }}
+            </div>
+            <div class="col-md-4">
+                {{ form.win_weight_field.label_tag }} {{ form.win_weight_field }}
+                {% if form.win_weight_field.help_text %}
+                     <p class="help">{{ form.win_weight_field.help_text|safe }}</p>
+                 {% endif %}
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-4">
+                {{ form.model_choice_field.label_tag }} {{ form.model_choice_field }}
+            </div>
+            <div class="col-md-4">
+                {{ form.model_name_field.label_tag }} {{ form.model_name_field }}
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="offset-md-3 col-md-9">
+                <button type="submit" name="learn" class="btn btn-primary">Learn and Save ML Model
+                    <span class="glyphicon glyphicon-education" aria-hidden="true"></span>
+                </button>
+                <button type="submit" name="retrieve" class="btn btn-primary">Retrieve ML Model
+                    <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+                </button>
+            </div>
+        </div>
+        {% if form.errors %}
+            <p class="validation-summary-errors">Errors detected.</p>
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <div class="alert alert-error">
+                    <strong>{{ field.label_tag }}{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+                <div class="alert alert-error">
+                <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </form>
+</div>>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+    {% load staticfiles %}
+<script src="{% static 'app/scripts/jquery.validate.min.js' %}"></script>
+
+{% endblock %}
+
+

@@ -1,0 +1,132 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+
+<div class="page-header">
+    <h1>
+        {% load staticfiles %}
+            <img src="{% static 'app/content/genesis.jpg' %}" alt="Genesis" height="100" width="120">    
+        Genesis <small>Generate new Formulas</small>
+    </h1>
+</div>
+
+<form action="" method="post" class="w3-container">
+    {% csrf_token %}
+    <div class="w3-row">
+        <div class="w3-third">
+            {{ form.input_file_field.label_tag }} {{ form.input_file_field }}
+            <br />
+            {{ form.data_list_file_field.label_tag }} {{ form.data_list_file_field }}
+        </div>
+        <div class="w3-third">
+            {{ form.be_field.label_tag }} {{ form.be_field }}
+            {% if form.be_field.help_text %}
+                    <p class="help">{{ form.be_field.help_text|safe }}</p>
+                {% endif %}
+            <br />
+            {{ form.nrexp_field.label_tag }} {{ form.nrexp_field }}
+            {% if form.nrexp_field.help_text %}
+                    <p class="help">{{ form.nrexp_field.help_text|safe }}</p>
+                {% endif %}
+        </div>
+        <div class="w3-third">
+            {{ form.project_field.label_tag }} {{ form.project_field }}
+        </div>
+    </div>
+    <div class="w3-row w3-padding-16">
+        <div class="w3-rest">
+            <button type="submit" name="retrieve_genesis" class="w3-btn w3-ripple">Retrieve and Select formulas...
+                <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+            </button>
+            <button type="submit" name="prepare_genesis" class="w3-btn w3-ripple">Prepare formulas...
+                <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+            </button>
+            <button type="submit" name="generate" class="w3-btn w3-ripple">Generate formulas...
+                <span class="glyphicon glyphicon-equalizer" aria-hidden="true"></span>
+            </button>
+            <button type="submit" name="predict" class="w3-btn w3-ripple">Predict formulas...
+                <span class="glyphicon glyphicon-equalizer" aria-hidden="true"></span>
+            </button>
+            <button type="submit" name="retrieve_phoenix" class="w3-btn w3-ripple">Retrieve Phoenix formulas...
+                <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
+            </button>
+        </div>
+    </div>
+    <div class="w3-row w3-padding-16">
+        <div class="w3-third">
+            {% if nr_sel_ingr == 'ALL' %}
+                <h2>All Ingredients selected</h2>
+            {% else %}
+                <h3>The next {{nr_sel_ingr}} Ingredients are selected</h3>
+                    <table id="genesis_selected_table" class="tablesorter-blue">
+                        <thead>
+                            <tr>
+                                <th> Ingr IPC </th>
+                                <th> Ingr Name </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for comp in sel_ingr %}
+                                <tr>
+                                    <td>{{ comp.0 }}</td>
+                                    <td>{{ comp.1 }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+            {% endif %}
+        </div>
+        <div class="w3-third">
+            {% if nr_sel_form == 'ALL' %}
+                <h2>All Formulas selected</h2>
+            {% else %}
+                <h3>The next {{nr_sel_form}} Formulas are selected</h3>
+                    <table id="genesis_selected_table" class="tablesorter-blue">
+                        <thead>
+                            <tr>
+                                <th> Formula IPC </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for mat in sel_form %}
+                                <tr>
+                                    <td>{{ mat }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+            {% endif %}
+        </div>
+    </div>
+    {% if form.errors %}
+        <p class="validation-summary-errors">Errors detected.</p>
+        {% for field in form %}
+            {% for error in field.errors %}
+                <div class="alert alert-error">
+                <strong>{{ field.label_tag }}{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+            <div class="alert alert-error">
+            <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endif %}
+</form>
+
+
+{% endblock %}
+
+
+{% block scripts %}
+    {% load staticfiles %}
+        <script src="{% static 'app/scripts/jquery.validate.min.js' %}"></script>
+        <script src="{% static 'app/scripts/crossfilter.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.27.8/js/jquery.tablesorter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.27.8/js/jquery.tablesorter.widgets.js"></script>
+    {% load staticfiles %}
+        <script src="{% static 'app/scripts/genesis.js' %}"></script>
+{% endblock %}
+

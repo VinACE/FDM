@@ -1,0 +1,113 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/dc/2.0.0-beta.32/dc.css" media="screen" /> 
+
+<h2>Explore E2E Data</h2>
+
+    <div id="version"></div>
+    <div id="explore" class="dev">
+
+        <div id="explore-menu"></div>
+            <div id="region-select">
+              Region 
+              <select></select>
+            </div>
+            <div id="category-select">
+              Category
+              <select>
+                <option value="All">All</option>
+                <option value="001">Fine</option>
+                <option value="002">Func</option>
+              </select>
+            </div>
+            <div id="corporation-select">
+              Corporation 
+              <select></select>
+            </div>
+            <div id='metric-radio'>
+              Number of Winners:&nbsp; 
+              <form>
+                <label>absolute
+                  <input type="radio" name="mode" value="0" checked>
+                </label>
+                <label>per-capita
+                  <input type="radio" name="mode" value="1">
+                </label>
+              </form>
+            </div>
+
+ <!--       <div id="explore-components">
+            <div id="main">
+                Explore Components: ingredient frequency, dosage distribution, ....
+                <svg id="ingr-freq-barchart1"></svg>
+            </div>
+        </div>
+-->
+    </div>
+
+
+    <h2 id="data1-title"></h2>
+    <div id="data1">
+        <pre></pre>
+    </div>
+
+    <div class="container">
+        <div class='row'>
+            <div class="col-md-2">
+                <div id="bucket-size-slider"> 
+                    <div id="inputSlider"> 
+                        <form>
+                            <div><input type="range" id="slideRange" value="100" min="0" max="1000" step="10" onchange="updateSlider(this.value)"
+                                        oninput="sliderValue.value = slideRange.value"></div> 
+                            Bucket size: <label id="sliderValue">100</label> 
+                        </form>
+                     </div> 
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div id="ingr-bucket-piechart"> 
+                    <div class="reset" style="visibility: visible;">selected: <span class="filter"></span> 
+                        <a href="javascript:ingr_bucket_piechart.filterAll();dc.redrawAll();">reset</a> 
+                    </div> 
+                </div>
+            </div>
+            <div class="col-md-6" id="box_ingr-freq-barchart2">
+                <div id="ingr-freq-barchart2"> 
+                    <div class="reset" style="visibility: visible;">selected: <span class="filter"></span> 
+                        <a href="javascript:ingr_freq_barchart.filterAll();dc.redrawAll();">reset</a> 
+                    </div> 
+                </div>
+            </div>
+        </div>
+        <div class='row'>
+            <div class="col-md-12">
+                <table class='table table-hover' id='ingr-freq-table'>
+                    <thead>
+                        <tr class='header'>
+                            <th>Component</th>
+                            <th>Frequency</th>
+                            <th>Bucket</th>
+                        </tr>
+                    </thead>
+                    <!-- data rows will filled in here -->
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+
+{% block scripts %}
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+
+    {% load staticfiles %}
+        <script src="{% static 'app/scripts/jquery.validate.min.js' %}"></script>
+        <script src="{% static 'app/scripts/crossfilter.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dc/2.0.0-beta.32/dc.js"></script>
+    {% load staticfiles %}
+        <script src="{% static 'app/scripts/explore_compfreq.js' %}"></script>
+{% endblock %}

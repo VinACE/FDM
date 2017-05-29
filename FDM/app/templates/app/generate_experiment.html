@@ -1,0 +1,54 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/dc/2.0.0-beta.32/dc.css" media="screen" /> 
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/dc/2.0.0-beta.32/dc.css" media="screen" /> 
+
+<div class="page-header">
+  <h1>Generated Formula: {{ experiment }} {{ title }} <small>with Ingredients and Dosage</small></h1>
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <table id="gen_experiment_table" class="tablesorter-blue">
+                <thead>
+                    <tr>
+                        <th> Component </th>
+                        <th> Component Name</th>
+                        <th> BomParts </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for comp in bom %}
+                    <tr>
+                        <td>{{ comp.0 }}</td>
+                        <td>{{ comp.1 }}</td>
+                        <td>{{ comp.2|floatformat:6 }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+
+{% block scripts %}
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+
+    {% load staticfiles %}
+        <script src="{% static 'app/scripts/jquery.validate.min.js' %}"></script>
+        <script src="{% static 'app/scripts/crossfilter.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.27.8/js/jquery.tablesorter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.27.8/js/jquery.tablesorter.widgets.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dc/2.0.0-beta.32/dc.js"></script>
+    {% load staticfiles %}
+        <script src="{% static 'app/scripts/gegnerate_experiment.js' %}"></script>
+{% endblock %}
+
