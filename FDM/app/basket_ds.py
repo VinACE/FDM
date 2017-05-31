@@ -18,6 +18,7 @@ import json
 import csv
 
 import app.models as models
+from FDM.settings import BASE_DIR
 from app.learn_ml import *
 from .basket_fp_growth import *
 

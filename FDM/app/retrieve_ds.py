@@ -25,7 +25,7 @@ def read_components():
     comp_file = os.path.join(BASE_DIR, 'data/components.csv')
     if os.path.exists(comp_file):
         models.fdm.comp_names = {}
-        file = open(comp_file, 'r')
+        file = open(comp_file,  mode='r', encoding='ascii', errors="surrogateescape")
         pyfile = File(file)
         for line in pyfile:
             words = line.rstrip().split(',', 1)
