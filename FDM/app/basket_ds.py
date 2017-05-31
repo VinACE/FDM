@@ -116,7 +116,8 @@ def basket_ds(association_choice, basket_size, basket_frequency, region_choices,
 
     basket_clearresults()
     if association_choice == 'fp':
-        file = open('data/fpbasket.csv', 'w')
+        file_name = os.path.join(BASE_DIR, 'data/fpbasket.csv')
+        file = open(file_name, 'w')
         pyfile = File(file)
         #for transaction in transactions:
         #    i = 0
@@ -161,7 +162,7 @@ def basket_save(region_choices, category_choices, corp_choices):
     choices = ""
     for choice in region_choices + category_choices + corp_choices:
         choices = choices + choice + '_'
-    ml_file = 'data/' + choices + 'basket.pickle'
+    ml_file = os.path.join(BASE_DIR, 'data/' + choices + 'basket.pickle') 
     try:
         file = open(ml_file, 'wb')
         pyfile = File(file)
@@ -175,7 +176,7 @@ def basket_retrieve(region_choices, category_choices, corp_choices):
     choices = ""
     for choice in region_choices + category_choices + corp_choices:
         choices = choices + choice + '_'
-    ml_file = 'data/' + choices + 'basket.pickle'
+    ml_file = os.path.join(BASE_DIR, 'data/' + choices + 'basket.pickle') 
     try:
         file = open(ml_file, 'rb')
         pyfile = File(file)

@@ -18,10 +18,11 @@ from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
 from sklearn.metrics import accuracy_score
 
 import app.models as models
+from FDM.settings import BASE_DIR
 
 
 def read_components():
-    comp_file = 'data/components.csv'
+    comp_file = os.path.join(BASE_DIR, 'data/components.csv')
     if os.path.exists(comp_file):
         models.fdm.comp_names = {}
         file = open(comp_file, 'r')
@@ -39,7 +40,7 @@ def retrieve_components (cat='', corp='', region=''):
     url=url+"',ZVOCORP='"+corp
     url=url+"',ZVORGN='"+region+"')/Results/?$format=json"
 
-    comp_file = 'data/components.csv'
+    comp_file = os.path.join(BASE_DIR, 'data/components.csv')
     if os.path.exists(comp_file):
         read_components()
     else:
@@ -62,7 +63,8 @@ def retrieve_components (cat='', corp='', region=''):
 
 def read_exp_e2e():
     print (os.getcwd())
-    e2e = pd.read_csv("data/ZCRE2E001.txt", sep=';', encoding='ISO-8859-1', low_memory=False)
+    exp_file = os.path.join(BASE_DIR, "data/ZCRE2E001.txt")
+    e2e = pd.read_csv(exp_file, sep=';', encoding='ISO-8859-1', low_memory=False)
 
     e2e.columns = ('co-area','fiscper', 'material','country','plant',
                    'profit-ctr','salesorg','sold-to','experiment','fiscvarnt',
@@ -94,7 +96,8 @@ def read_exp_e2e():
 
 def read_subm_e2e():
     print (os.getcwd())
-    e2e = pd.read_csv("data/ZCPE2E002.txt", sep=';', encoding='ISO-8859-1', low_memory=False)
+    subm_file = os.path.join(BASE_DIR, "data/ZCPE2E002.txt")
+    e2e = pd.read_csv(subm_file, sep=';', encoding='ISO-8859-1', low_memory=False)
 
     e2e.columns = ('fiscper', 'catclass', 'enduse', 'prodhier', 'bomlvl', 'expcmp',
                       'exptyp', 'co-area', 'profit-ctr', 'fiscvarnt', 'ccprj', 'ccrsc', 

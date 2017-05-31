@@ -16,6 +16,7 @@ import glob, os
 import pickle
 import json
 import app.models as models
+from FDM.settings import BASE_DIR
 from .forms import *
 from .retrieve_ds import *
 from .learn_ml import *
@@ -95,18 +96,18 @@ def learn_view(request):
 #            models.fdm.components = pickle.load(myfile)
 #            myfile.close()
 
-            comp_file = 'data/components.csv'
+            comp_file = os.path.join(BASE_DIR, 'data/components.csv')
             if os.path.exists(comp_file) and len(models.fdm.comp_names) == 0:
                 read_components()
             if 'learn' in form.data:
                 learn_ml(ml_choices, ms_choices, test_perc, win_weight)
                 if len(model_name) > 0:
-                    ml_file = 'data/' + model_name + '_1.pickle'
+                    ml_file = os.path.join(BASE_DIR, 'data/' + model_name + '_1.pickle')
                     file = open(ml_file, 'wb')
                     pyfile = File(file)
                     pickle.dump(models.fdm.learn_li, pyfile)
                     pyfile.close()
-                    ml_file = 'data/' + model_name + '_2.pickle'
+                    ml_file = os.path.join(BASE_DIR, 'data/' + model_name + '_2.pickle')
                     file = open(ml_file, 'wb')
                     pyfile = File(file)
                     pickle.dump(models.fdm.comp_dict, pyfile)
@@ -116,12 +117,12 @@ def learn_view(request):
                 if len(model_name) > 0:
                     models.fdm.learn_li = []
                     models.fdm.components = []
-                    ml_file = 'data/' + model_name + '_1.pickle'
+                    ml_file = os.path.join(BASE_DIR, 'data/' + model_name + '_1.pickle')
                     file = open(ml_file, 'rb')
                     pyfile = File(file)
                     models.fdm.learn_li = pickle.load(pyfile)
                     pyfile.close
-                    ml_file = 'data/' + model_name + '_2.pickle'
+                    ml_file = os.path.join(BASE_DIR, 'data/' + model_name + '_2.pickle')
                     file = open(ml_file, 'rb')
                     pyfile = File(file)
                     models.fdm.comp_dict = pickle.load(pyfile)
