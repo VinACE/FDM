@@ -15,6 +15,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
 import app.models as models
+from FDM.settings import BASE_DIR
 
 class BootstrapAuthenticationForm(AuthenticationForm):
     """Authentication form which uses boostrap CSS."""
@@ -28,9 +29,14 @@ class BootstrapAuthenticationForm(AuthenticationForm):
                                    'placeholder':'Password'}))
 
 def model_choices():
-    files = ['new'] + glob.glob('data/*_1.pickle')
+    file_name = os.path.join(BASE_DIR, 'data/*_1.pickle')
+    files = ['new']
+    glob_list = glob.glob(file_name)
+    for ml_name in glob_list:
+        head, tail = os.path.split(ml_name)
+        files.append(tail)
     for i in range(1, len(files)):
-        files[i] = files[i][5:-9]
+        files[i] = files[i][0:-9]
     choices = [(file, file) for file in files]
     return (choices)
 
