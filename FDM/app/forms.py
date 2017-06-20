@@ -74,7 +74,7 @@ class predict_form(forms.Form):
         label='Project',
         max_length=30,
         required = False,
-        initial = '875303WRA',
+        initial = '863994WRA',
         help_text='863880WRA/875303WRA for subm, 301677WRR for exp')
     experiment_field = forms.CharField(
         label='Experiment',

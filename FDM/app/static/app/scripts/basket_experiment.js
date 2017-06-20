@@ -37,7 +37,13 @@ var svg = d3.select("#radial_tree").append("svg")
     .append("g")
     .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
 
-d3.json("/api/basket_experiment_api/"+basket, function (error, root) {
+//get the form fields and add them as parameters to the GET. The submit will fire off its own GET request
+//document.getElementById("seeker_form").submit();
+// url calculation is needed for WSGI
+var url = window.location.href;
+if (url[url.length - 1] != '/') { url = url + '/' }
+url = url + "/api/basket_experiment_api/" + basket;
+d3.json(url, function (error, root) {
     if (error) {
         console.log(error)
     }
