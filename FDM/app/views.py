@@ -29,9 +29,8 @@ import app.genesis as genesis
 
 def home(request):
     """Renders the home page."""
-    context_instance = RequestContext(request)
     assert isinstance(request, HttpRequest)
-    return render(request, 'app/index.html', {'title':'Home Page', 'year':datetime.now().year}, context_instance)
+    return render(request, 'app/index.html', {'title':'Home Page', 'year':datetime.now().year})
 
 
 def retrieve_view(request):
@@ -45,8 +44,7 @@ def retrieve_view(request):
         return render(request, 'app/retrieveresults.html',
                             {'retrieve_df': retrieve_df.to_html(index=True, classes="table table-striped") })
 
-    return render(request, 'app/retrieve.html', {'form_errors': form_errors },
-                    context_instance = RequestContext(request, {'message':'IFF-DM Data Miner', 'year':datetime.now().year,} ))
+    return render(request, 'app/retrieve.html', {'form_errors': form_errors, 'message':'IFF-DM Data Miner', 'year':datetime.now().year} )
 
 def learn_view(request):
     """Renders the learn page."""
@@ -136,8 +134,7 @@ def learn_view(request):
         if models.fdm.e2e.empty:
             form.add_form_error("First retrieve your E2E data")
 
-    return render(request, 'app/learn.html', {'form': form },
-                  context_instance = RequestContext(request, {'message':'IFF-DM Data Miner', 'year':datetime.now().year,} ))
+    return render(request, 'app/learn.html', {'form': form, 'message':'IFF-DM Data Miner', 'year':datetime.now().year,} )
 
 
 def predict_view(request):
@@ -160,8 +157,7 @@ def predict_view(request):
         if len(models.fdm.learn_li) == 0:
             form.add_form_error("First learn a ML model")
 
-    return render(request, 'app/predict.html', {'form': form },
-                  context_instance = RequestContext(request, {'message':'IFF-DM Data Miner', 'year':datetime.now().year,} ))
+    return render(request, 'app/predict.html', {'form': form, 'message':'IFF-DM Data Miner', 'year':datetime.now().year,} )
 
 
 def generate_view(request):
@@ -188,8 +184,7 @@ def generate_view(request):
         if len(models.fdm.learn_li) == 0:
             form.add_form_error("First learn a ML model")
 
-    return render(request, 'app/generate.html', {'form': form },
-                  context_instance = RequestContext(request, {'message':'IFF-DM Data Miner', 'year':datetime.now().year,} ))
+    return render(request, 'app/generate.html', {'form': form, 'message':'IFF-DM Data Miner', 'year':datetime.now().year,} )
 
 
 def generate_experiment_view(request, experiment_id):
@@ -204,8 +199,7 @@ def generate_experiment_view(request, experiment_id):
 
 def explore_view(request):
     """Renders the explore page."""
-    return render(request, 'app/explore.html',
-                  context_instance = RequestContext(request, {'message':'IFF-DM Data Miner', 'year':datetime.now().year,} ))
+    return render(request, 'app/explore.html', {'message':'IFF-DM Data Miner', 'year':datetime.now().year,} )
 
 def basket_view(request):
     """Renders the basket page."""
@@ -238,8 +232,7 @@ def basket_view(request):
         form = basket_form(initial={'association_choice_field':'apriori', 'fnstssbm_choices_field':['WIN','LOSS']})
         if models.fdm.e2e.empty:
             form.add_form_error("First retrieve your E2E data")
-    return render(request, 'app/basket.html', {'form': form },
-                  context_instance = RequestContext(request, {'message':'IFF-DM Data Miner', 'year':datetime.now().year,} ))
+    return render(request, 'app/basket.html', {'form': form, 'message':'IFF-DM Data Miner', 'year':datetime.now().year,} )
 
 
 def basket_experiment_view(request, basket_id):
@@ -254,17 +247,17 @@ def basket_experiment_view(request, basket_id):
 def explore_compfreq_view(request):
     """Renders the explore page."""
     return render(request, 'app/explore/explore_compfreq.html',
-                  context_instance = RequestContext(request, {'message':'IFF-DM Data Miner', 'year':datetime.now().year,} ))
+                  {'message':'IFF-DM Data Miner', 'year':datetime.now().year,} )
 
 def explore_e2esubm_view(request):
     """Renders the explore page."""
     return render(request, 'app/explore/explore_e2esubm.html',
-                  context_instance = RequestContext(request, {'message':'IFF-DM Data Miner', 'year':datetime.now().year,} ))
+                  {'message':'IFF-DM Data Miner', 'year':datetime.now().year,} )
 
 def explore_orderbook_view(request):
     """Renders the explore page."""
     return render(request, 'app/explore/orderbook.html',
-                  context_instance = RequestContext(request, {'message':'IFF-DM Data Miner', 'year':datetime.now().year,} ))
+                  {'message':'IFF-DM Data Miner', 'year':datetime.now().year,} )
 
 
 def genesis_view(request):
@@ -313,7 +306,7 @@ def genesis_view(request):
                     'g_unknown_ipc_l' : models.g_unknown_ipc_l,
                     'g_X'         : models.g_X,
                     }
-                return render(request, 'app/genesisresults.html', context, context_instance=RequestContext(request))
+                return render(request, 'app/genesisresults.html', context)
     else:
         form = genesis_form(initial={'input_file_field' : 'genesis_input.csv', 'data_list_file_field' : 'genesis_data_list.csv'})
 
@@ -334,8 +327,7 @@ def genesis_view(request):
         'nr_sel_form'   : nr_sel_form,
         'sel_form'      : models.g_sel_form,
         }
-    context_instance = RequestContext(request, {'message':'IFF-DM Data Miner', 'year':datetime.now().year,} )
-    return render(request, 'app/genesis.html', context, context_instance)
+    return render(request, 'app/genesis.html', context)
                   
 
 
@@ -345,12 +337,11 @@ def contact(request):
     return render(
         request,
         'app/contact.html',
-        context_instance = RequestContext(request,
         {
             'title':'Contact',
             'message':'FDM Fragrance Data Miner',
             'year':datetime.now().year,
-        })
+        }
     )
 
 def about(request):
@@ -359,12 +350,11 @@ def about(request):
     return render(
         request,
         'app/about.html',
-        context_instance = RequestContext(request,
         {
             'title':'About',
             'message':'IFF-DM Data Miner',
             'year':datetime.now().year,
-        })
+        }
     )
 
 

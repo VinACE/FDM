@@ -3,7 +3,7 @@ Definition of urls for FDM.
 """
 
 from datetime import datetime
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from app.forms import BootstrapAuthenticationForm
@@ -16,7 +16,7 @@ import app.basket_ds
 # from django.contrib import admin
 # admin.autodiscover()
 
-urlpatterns = patterns('',
+urlpatterns = [
     # Examples:
     url(r'^$', app.views.home, name='home'),
 
@@ -58,4 +58,4 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
-)
+    ]
